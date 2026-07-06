@@ -6,7 +6,15 @@ const signup = async (req, res) => {
 
     try {
 
-        const { fullName, email, password } = req.body;
+        const { fullName, password } = req.body;
+        const email = req.body.email?.trim().toLowerCase();
+
+        if (!fullName || !email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Please fill in all fields."
+            });
+        }
 
         const existingUser = await User.findOne({ email });
 
@@ -53,7 +61,15 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
 
     try {
-        const { email, password } = req.body;
+        const { password } = req.body;
+        const email = req.body.email?.trim().toLowerCase();
+
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Please fill in all fields."
+            });
+        }
 
         const existingUser = await User.findOne({ email });
 

@@ -44,9 +44,13 @@ export const AuthProvider = ({ children }) => {
           setUser(data.user);
           setStoredUser(data.user);
         }
-      } catch {
-        clearAuth();
-        setUser(null);
+      } catch (err) {
+        if (err.response && (err.response.status === 401 || err.response.status === 403)) {
+          clearAuth();
+          setUser(null);
+        } else {
+          console.warn("Failed to fetch profile due to a network/server issue. Retaining auth state.", err);
+        }
       } finally {
         setLoading(false);
       }
