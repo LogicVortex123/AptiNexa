@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import AuthLayout from "../components/AuthLayout";
+import { useAuth } from "../context/AuthContext";
 import { signupUser } from "../services/authService";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [form, setForm] = useState({ fullName: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -38,9 +40,15 @@ const Signup = () => {
         form.password
       );
 
+      console.log("Signup API response:", data);
+
       if (data.success) {
-        toast.success("Account created! Please sign in.");
-        navigate("/login");
+        if (!data.token) {
+          console.warn("Warning: The server responded successfully but did not return an authentication token. Please verify that your backend server is restarted and running the updated code.");
+        }
+        login(data.token, data.user);
+        toast.success("Welcome! Account created successfully.");
+        navigate("/dashboard");
       }
     } catch (err) {
       const message =

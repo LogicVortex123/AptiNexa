@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setTokenState] = useState(getToken);
   const [loading, setLoading] = useState(true);
 
-  const isAuthenticated = Boolean(token);
+  const isAuthenticated = Boolean(token) || Boolean(getToken());
 
   const login = useCallback((newToken, userData) => {
     setToken(newToken);
