@@ -40,15 +40,13 @@ const Signup = () => {
         form.password
       );
 
-      console.log("Signup API response:", data);
-
-      if (data.success) {
-        if (!data.token) {
-          console.warn("Warning: The server responded successfully but did not return an authentication token. Please verify that your backend server is restarted and running the updated code.");
-        }
+      if (data.success && data.token) {
         login(data.token, data.user);
         toast.success("Welcome! Account created successfully.");
-        navigate("/dashboard");
+        navigate("/dashboard", { replace: true });
+      } else if (data.success) {
+        toast.success("Account created! Please sign in.");
+        navigate("/login", { replace: true });
       }
     } catch (err) {
       const message =
