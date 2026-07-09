@@ -16,7 +16,7 @@ An AI-powered placement readiness platform that analyzes a student's LeetCode pr
 
 # 🌐 Live Demo
 
-- **Frontend:** https://aptinexa-5m4y2pr1g-logicvortex123s-projects.vercel.app/
+- **Frontend:** https://aptinexa-qvlzplh5d-logicvortex123s-projects.vercel.app
 - **Backend API:** https://aptinexa-backend.onrender.com
 
 ---
